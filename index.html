@@ -2,10 +2,529 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Personal Site</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yens Castro | Personal Portfolio</title>
+
+  <style>
+    /*
+      COLOR AND SPACING SETTINGS
+      Change these values to make the whole site feel like your own.
+    */
+    :root {
+      --primary-color: #28666e;
+      --primary-dark: #17434a;
+      --accent-color: #f4a261;
+      --background-color: #f7fbfa;
+      --section-color: #ffffff;
+      --text-color: #243438;
+      --muted-text: #607276;
+      --border-color: #dbe8e6;
+      --content-width: 1200px;
+      --section-space: 5rem;
+    }
+
+    /* A simple reset makes spacing easier to understand and control. */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--background-color);
+      color: var(--text-color);
+      font-family: Georgia, 'Times New Roman', serif;
+      line-height: 1.6;
+    }
+
+    .container {
+      margin: 0 auto;
+      max-width: var(--content-width);
+      padding: 0 1.5rem;
+    }
+
+    /* The navigation stays at the top while visitors move through the page. */
+    .site-header {
+      background-color: var(--section-color);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .navigation {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      min-height: 4.5rem;
+    }
+
+    .logo {
+      color: var(--primary-dark);
+      font-size: 1.25rem;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-color);
+      font-size: 0.95rem;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus {
+      color: var(--primary-color);
+    }
+
+    /* HOME: Replace the comment below with a hero image or icon if you want one. */
+    .hero {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      min-height: 1vh;
+      padding-bottom: var(--section-space);
+      padding-top: var(--section-space);
+    }
+
+    .hero-content {
+      max-width: 650px;
+    }
+
+    .eyebrow {
+      color: var(--primary-color);
+      font-size: 0.85rem;
+      font-weight: bold;
+      letter-spacing: 0.12rem;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: var(--primary-dark);
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      margin: 1rem 0;
+    }
+
+    h2 {
+      font-size: 2.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-text,
+    .section-intro {
+      color: var(--muted-text);
+      font-size: 1.15rem;
+      max-width: 600px;
+    }
+
+    .button {
+      background-color: var(--primary-color);
+      border-radius: 4px;
+      color: #ffffff;
+      display: inline-block;
+      margin-top: 1.75rem;
+      padding: 0.8rem 1.3rem;
+      text-decoration: none;
+    }
+
+    .button:hover,
+    .button:focus {
+      background-color: var(--primary-dark);
+    }
+
+    /* ABOUT: Replace the placeholder div with your own profile image. */
+    .about-section,
+    .skills-section,
+    .projects-section,
+    .contact-section {
+      padding-bottom: var(--section-space);
+      padding-top: var(--section-space);
+    }
+
+    .about-section {
+      background-color: var(--section-color);
+    }
+
+    .about-content {
+      align-items: center;
+      display: flex;
+      gap: 3rem;
+    }
+
+    .profile-placeholder {
+      align-items: center;
+      background-color: #d8eeea;
+      border: 3px solid var(--accent-color);
+      border-radius: 50%;
+      color: var(--primary-dark);
+      display: flex;
+      flex-shrink: 0;
+      height: 190px;
+      justify-content: center;
+      text-align: center;
+      width: 190px;
+    }
+
+    /* SKILLS: Add or remove skill items. Replace each small symbol with an icon or image. */
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      list-style: none;
+      margin-top: 2rem;
+    }
+
+    .skill-item {
+      background-color: var(--section-color);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      flex: 1 1 180px;
+      padding: 1.25rem;
+    }
+
+    .skill-icon {
+      height: 24px;
+      margin-right: 0.5rem;
+      vertical-align: middle;
+      width: 24px;
+    }
+
+    /* PROJECTS: Each card describes one project and links to its future repository. */
+    .projects-section {
+      background-color: #eaf4f2;
+    }
+
+    .projects-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      list-style: none;
+      margin-top: 2rem;
+    }
+
+    .project-card {
+      background-color: var(--section-color);
+      border-radius: 8px;
+      box-shadow: 0 5px 18px rgba(23, 67, 74, 0.1);
+      display: flex;
+      flex: 1 1 280px;
+      flex-direction: column;
+      padding: 1.5rem;
+    }
+
+    .project-card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .project-summary {
+      color: var(--muted-text);
+      flex-grow: 1;
+    }
+
+    .technology-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      list-style: none;
+      margin: 1.25rem 0;
+    }
+
+    .technology-badge {
+      background-color: #d8eeea;
+      border-radius: 999px;
+      color: var(--primary-dark);
+      font-size: 0.82rem;
+      padding: 0.25rem 0.65rem;
+    }
+
+    .project-link {
+      align-self: flex-start;
+      background-color: var(--primary-color);
+      border-radius: 4px;
+      color: #ffffff;
+      padding: 0.65rem 1rem;
+      text-decoration: none;
+    }
+
+    .project-link:hover,
+    .project-link:focus {
+      background-color: var(--primary-dark);
+    }
+
+    /* CONTACT: This form is ready for styling, but needs a service to actually send messages. */
+    .contact-section {
+      background-color: var(--primary-dark);
+      color: #ffffff;
+    }
+
+    .contact-section h2,
+    .contact-section .section-intro {
+      color: #ffffff;
+    }
+
+    .contact-form {
+      margin-top: 2rem;
+      max-width: 650px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .form-field {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      margin-bottom: 0.35rem;
+    }
+
+    input,
+    textarea {
+      border: 2px solid transparent;
+      border-radius: 4px;
+      font: inherit;
+      padding: 0.8rem;
+      width: 100%;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--accent-color);
+      outline: none;
+    }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .contact-form .button {
+      background-color: var(--accent-color);
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+      font-weight: bold;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1.25rem;
+      list-style: none;
+      margin-top: 2rem;
+    }
+
+    /* CONTACT: Replace these text links with social media icons or images if desired. */
+    .social-links a {
+      color: #ffffff;
+    }
+
+    .site-footer {
+      background-color: #102f34;
+      color: #d8eeea;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    /* On smaller screens, stacked content is easier to read and tap. */
+    @media (max-width: 700px) {
+      .navigation,
+      .about-content,
+      .form-row {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .navigation {
+        gap: 0.75rem;
+        padding-bottom: 1rem;
+        padding-top: 1rem;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        gap: 0.75rem 1rem;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-bottom: 6rem;
+        padding-top: 6rem;
+      }
+
+      h1 {
+        font-size: 3rem;
+      }
+
+      .about-content {
+        gap: 2rem;
+      }
+
+      /* Keep the project cards in one easy-to-read column on phones. */
+      .project-card {
+        flex-basis: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-  <!-- Add your HTML content here -->
+  <!-- The header contains the site name and anchor links to each section. -->
+  <header class="site-header">
+    <nav class="navigation container" aria-label="Main navigation">
+      <a class="logo" href="#home">Yens Castro</a>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About Me</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HOME: Add an icon or image beside this text if you would like a hero visual. -->
+    <section class="hero container" id="home">
+      <div class="hero-content">
+        <p class="eyebrow">Welcome to my portfolio</p>
+        <h1>Hello, I am Yens Castro.</h1>
+        <p class="hero-text">I'm a senior-year Computer Science student at Arizona State University with hands-on experience in full-stack development, open-source contribution, and AI-assisted tooling. I enjoy turning complex problems into clean, functional solutions — from React frontends to Python backends. Here you'll find a selection of projects that reflect my skills, my curiosity, and my commitment to writing code that matters. </p>
+        <a class="button" href="#about">Get to know me</a>
+      </div>
+    </section>
+
+    <!-- ABOUT: Replace the placeholder text with your own photo file, for example: img/profile.jpg. -->
+    <section class="about-section" id="about">
+      <div class="about-content container">
+        <!-- PROFILE PHOTO: Replace img/Yens.jpg with another image path if needed. -->
+        <img class="profile-placeholder" src="img/Yens.jpg" alt="Yens Castro">
+        <div>
+          <p class="eyebrow">A little about me</p>
+          <h2>About Me</h2>
+          <p>I am studying at Arizona State University and exploring the creative side of technology. I enjoy learning new skills, solving problems, and working on projects that help me grow. I am currently working on various web development projects and AI based applications. I have experience in both frontend and backend development using modern frameworks and tools such as React, Node.js, and Python. I am also familiar with database management and cloud computing platforms like AWS and postgresql.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS: Duplicate a skill item to add more skills to this list. -->
+    <section class="skills-section container" id="skills">
+      <p class="eyebrow">What I am learning</p>
+      <h2>Skills</h2>
+      <p class="section-intro">Here are a few tools and topics I am practicing right now.</p>
+      <ul class="skills-list">
+        <!-- SKILL ICONS: Replace an image path if you choose a different icon. -->
+        <li class="skill-item"><img class="skill-icon" src="img/html.png" alt=""><strong>HTML</strong></li>
+        <li class="skill-item"><img class="skill-icon" src="img/css.png" alt=""><strong>CSS</strong></li>
+        <li class="skill-item"><img class="skill-icon" src="img/terminal.png" alt=""><strong>Python</strong></li>
+        <li class="skill-item"><img class="skill-icon" src="img/javascript.png" alt=""><strong>JavaScript</strong></li>
+      </ul>
+    </section>
+
+    <!-- PROJECTS: Edit each title, summary, technology badge, and repository link below. -->
+    <section class="projects-section" id="projects">
+      <div class="container">
+        <p class="eyebrow">Selected work</p>
+        <h2>Projects</h2>
+        <p class="section-intro">A few projects that show what I have been learning and building.</p>
+        <ul class="projects-list">
+          <!-- PATHREVIEW PROJECT: Keep the repository link comment until you add the real URL. -->
+          <li class="project-card">
+            <h3>PathReview: Open-Source Contribution</h3>
+            <p class="project-summary">Contributed to an AI-powered portfolio-review platform with a FastAPI backend and React frontend. Fixed a data-privacy defect in the safety layer by improving phone-number redaction and wrote a regression test using pytest.</p>
+            <ul class="technology-list">
+              <li class="technology-badge">FastAPI</li>
+              <li class="technology-badge">React</li>
+              <li class="technology-badge">pytest</li>
+            </ul>
+            <!-- Replace # with your actual GitHub repo URL -->
+            <a class="project-link" href="https://github.com/yenscastro/pathreview" target="_blank" rel="noopener noreferrer">View Code</a>
+          </li>
+
+          <!-- CUSTOM PC BUILDER PROJECT: Add or remove technology badges as needed. -->
+          <li class="project-card">
+            <h3>Custom PC Builder Platform</h3>
+            <p class="project-summary">Built a full-stack web app where users can create, read, update, and delete custom PC builds. Includes a dynamic price-calculator and compatibility validation with 20+ rules that block saves on errors and warn on conflicts.</p>
+            <ul class="technology-list">
+              <li class="technology-badge">Full-stack</li>
+              <li class="technology-badge">CRUD</li>
+              <li class="technology-badge">Validation</li>
+            </ul>
+            <!-- Replace # with your actual GitHub repo URL -->
+            <a class="project-link" href="https://github.com/yenscastro/custom-pc-builder" target="_blank" rel="noopener noreferrer">View Code</a>
+          </li>
+
+          <!-- FLASHCARD PROJECT: Add or remove technology badges as needed. -->
+          <li class="project-card">
+            <h3>Flashcard Learning Platform</h3>
+            <p class="project-summary">Developed a full-stack educational platform with user authentication, personalized study sets, interactive flashcard modes (flip, progress tracking), and a community forum with search and filtering.</p>
+            <ul class="technology-list">
+              <li class="technology-badge">Full-stack</li>
+              <li class="technology-badge">Authentication</li>
+              <li class="technology-badge">Search</li>
+            </ul>
+            <!-- Replace # with your actual GitHub repo URL -->
+            <a class="project-link" href="https://github.com/yenscastro/Final_App" target="_blank" rel="noopener noreferrer">View Code</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CONTACT: Replace the social link placeholders with your real profiles and icons. -->
+    <section class="contact-section" id="contact">
+      <div class="container">
+        <p class="eyebrow">Let us connect</p>
+        <h2>Contact</h2>
+        <p class="section-intro">Have a question or want to say hello? Send me a message.</p>
+        <form class="contact-form" action="https://formspree.io/f/xaeyjpgp" method="post">
+          <div class="form-row">
+            <div class="form-field">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="Your name" required>
+            </div>
+            <div class="form-field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" required>
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Write your message here" required></textarea>
+          </div>
+          <button class="button" type="submit">Send message</button>
+        </form>
+        <ul class="social-links">
+          <li><a href="https://www.linkedin.com/in/yens-castro-soto" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          <li><a href="https://github.com/yenscastro" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="mailto:yenscastro15@gmail.com">Email me</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER: Update the name and year when you personalize the site. -->
+  <footer class="site-footer">
+    <p>&copy; 2026 Yens Castro. All rights reserved.</p>
+  </footer>
 </body>
 </html>
